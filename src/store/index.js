@@ -64,8 +64,22 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    // 未完成的总数
     unDoneLength(state) {
       return state.list.filter(x => x.done === false).length
+    },
+    // 三个类型的数据展示
+    infoList(state) {
+      if (state.viewKey === 'all') {
+        return state.list
+      }
+      if (state.viewKey === 'undone') {
+        return state.list.filter(x => !x.done)
+      }
+      if (state.viewKey === 'done') {
+        return state.list.filter(x => x.done)
+      }
+      return state.list
     }
   },
   modules: {
