@@ -8,7 +8,7 @@
         <!-- 复选框 -->
         <a-checkbox>{{item.info}}</a-checkbox>
         <!-- 删除链接 -->
-        <a slot="actions">删除</a>
+        <a slot="actions" @click="removeItemById(item.id)">删除</a>
       </a-list-item>
 
       <!-- footer区域 -->
@@ -48,11 +48,16 @@ export default {
     handleInputChange(e) {
       this.$store.commit('setInputValue', e.target.value)
     },
+    // 添加项
     addItemToList() {
       if (this.inputValue.trim().length <= 0) {
         return this.$message.warning('输入内容不能为空！')
       }
       this.$store.commit('addItem')
+    },
+    // 删除对应的项
+    removeItemById(id) {
+      this.$store.commit('removeItem', id)
     }
   }
 }
