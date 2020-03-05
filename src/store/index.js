@@ -38,6 +38,13 @@ export default new Vuex.Store({
       if (i !== -1) {
         state.list.splice(i, 1)
       }
+    },
+    // 修改列表的勾选状态
+    checkBox(state, param) {
+      const i = state.list.findIndex(x => x.id === param.id)
+      if (i !== -1) {
+        state.list[i].done = param.status
+      }
     }
   },
   actions: {
@@ -46,6 +53,11 @@ export default new Vuex.Store({
         console.log(data)
         context.commit('initList', data)
       })
+    }
+  },
+  getters: {
+    unDoneLength(state) {
+      return state.list.filter(x => x.done === false).length
     }
   },
   modules: {

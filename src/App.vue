@@ -6,7 +6,10 @@
     <a-list bordered :dataSource="list" class="dt_list">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- 复选框 -->
-        <a-checkbox>{{item.info}}</a-checkbox>
+        <a-checkbox
+          :checked="item.done"
+          @change="(e) => {boxStateChanged(e, item.id)}"
+        >{{item.info}}</a-checkbox>
         <!-- 删除链接 -->
         <a slot="actions" @click="removeItemById(item.id)">删除</a>
       </a-list-item>
@@ -14,7 +17,7 @@
       <!-- footer区域 -->
       <div slot="footer" class="footer">
         <!-- 未完成的任务个数 -->
-        <span>0条剩余</span>
+        <span>{{unDoneLength}}条剩余</span>
         <!-- 操作按钮 -->
         <a-button-group>
           <a-button type="primary">全部</a-button>
@@ -29,19 +32,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   data() {
-    return {
-    }
+    return {}
   },
   created() {
     this.$store.dispatch('getList')
   },
   computed: {
-    ...mapState(['list', 'inputValue'])
+    ...mapState(['list', 'inputValue']),
+    ...mapGetters(['unDoneLength'])
   },
   methods: {
     // 监听文本框内容变化
@@ -58,6 +61,15 @@ export default {
     // 删除对应的项
     removeItemById(id) {
       this.$store.commit('removeItem', id)
+    },
+    // 监听复选框状态变化
+    boxStateChanged(e, id) {
+      // console.log(e.target.checked)
+      const param = {
+        id: id,
+        status: e.target.checked
+      }
+      this.$store.commit('checkBox', param)
     }
   }
 }
