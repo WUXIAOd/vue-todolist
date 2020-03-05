@@ -9,7 +9,8 @@ export default new Vuex.Store({
     list: [],
     // 文本框内容
     inputValue: '默认文本',
-    nextId: 5
+    nextId: 5,
+    viewKey: 'all'
   },
   mutations: {
     initList(state, list) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     // 清除已完成的选项
     removeHaveDone(state) {
       state.list = state.list.filter(x => x.done === false)
+    },
+    changeViewKey(state, key) {
+      state.viewKey = key
     }
   },
   actions: {

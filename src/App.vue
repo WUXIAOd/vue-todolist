@@ -20,9 +20,9 @@
         <span>{{unDoneLength}}条剩余</span>
         <!-- 操作按钮 -->
         <a-button-group>
-          <a-button type="primary">全部</a-button>
-          <a-button>未完成</a-button>
-          <a-button>已完成</a-button>
+          <a-button :type="viewKey === 'all' ? 'primary' : 'default'" @click="changelist('all')">全部</a-button>
+          <a-button :type="viewKey === 'undone' ? 'primary' : 'default'" @click="changelist('undone')">未完成</a-button>
+          <a-button :type="viewKey === 'done' ? 'primary' : 'default'" @click="changelist('done')">已完成</a-button>
         </a-button-group>
         <!-- 把已经完成的任务清空 -->
         <a @click="cleanList">清除已完成</a>
@@ -43,7 +43,7 @@ export default {
     this.$store.dispatch('getList')
   },
   computed: {
-    ...mapState(['list', 'inputValue']),
+    ...mapState(['list', 'inputValue', 'viewKey']),
     ...mapGetters(['unDoneLength'])
   },
   methods: {
@@ -74,6 +74,10 @@ export default {
     // 清除已完成的选项
     cleanList() {
       this.$store.commit('removeHaveDone')
+    },
+    // 改变列表视图
+    changelist(key) {
+      this.$store.commit('changeViewKey', key)
     }
   }
 }
