@@ -1,5 +1,5 @@
 # vue-todolist-vuex
-
+这是一个 Vuex 以及 Vue 的学习 demo, 是一个没有数据存储功能的网页版todoList ！！！
 ## Project setup
 ```
 npm install
