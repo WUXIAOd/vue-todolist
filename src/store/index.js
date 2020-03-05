@@ -45,6 +45,10 @@ export default new Vuex.Store({
       if (i !== -1) {
         state.list[i].done = param.status
       }
+    },
+    // 清除已完成的选项
+    removeHaveDone(state) {
+      state.list = state.list.filter(x => x.done === false)
     }
   },
   actions: {
